@@ -62,8 +62,8 @@ public class BezierRandomMover : MonoBehaviour
             newObject.trailRenderer = obj.GetComponent<TrailRenderer>();
 
             newObject.p0 = startPoint.position;
-            newObject.p1 = newObject.p0 + GetRandomControlOffset();
-            newObject.p2 = Vector3.Lerp(newObject.p0, endPoint.position, 0.5f) + GetRandomControlOffset();
+            newObject.p1 = startPoint.position + GetRandomControlOffset();
+            newObject.p2 = Vector3.Lerp(startPoint.position, endPoint.position, 0.5f) + GetRandomControlOffset();
             newObject.p3 = endPoint.position + GetRandomControlOffset();
             newObject.p4 = endPoint.position;
 
@@ -111,7 +111,7 @@ public class BezierRandomMover : MonoBehaviour
             }
         }
     }
-
+    // 위치계산
     private Vector3 CalculateQuarticBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4)
     {
         float oneMinusT = 1f - t;
@@ -123,7 +123,7 @@ public class BezierRandomMover : MonoBehaviour
             4f * oneMinusT * t * t * t * p3 +
             t * t * t * t * p4;
     }
-
+    // 방향계산
     private Vector3 CalculateQuarticBezierTangent(float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4)
     {
         float oneMinusT = 1f - t;
@@ -148,7 +148,7 @@ public class BezierRandomMover : MonoBehaviour
     {
         if (targetRenderer == null) return;
 
-        Color randomColor = Random.ColorHSV(0f, 1f, 0.5f, 0.8f, 0.8f, 1f);
+        Color randomColor = Random.ColorHSV(0f, 1f, 0.7f, 1f, 0.8f, 1f);
 
         targetRenderer.material.color = randomColor;
 
