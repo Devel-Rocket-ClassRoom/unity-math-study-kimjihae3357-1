@@ -13,7 +13,7 @@ public class ScreenChecker : MonoBehaviour
     [Header("[캔버스]")]
     public Canvas canvas;
 
-    private float edgeOffset = 30f;
+    [SerializeField] private float edgeOffset = 30f;
 
     private void Start()
     {
@@ -33,7 +33,7 @@ public class ScreenChecker : MonoBehaviour
             Transform targetObject = targetObjects[i];
             RectTransform indicator = indicators[i];
 
-            if (targetObjects == null || indicator == null )
+            if (targetObject == null || indicator == null )
             {
                 continue;
             }
@@ -63,16 +63,23 @@ public class ScreenChecker : MonoBehaviour
         indicator.gameObject.SetActive(true);
 
         if (isBehind )
-        {
-            screenPos.x = Screen.width - screenPos.x;
-            screenPos.y = Screen.height - screenPos.y;
+        { // 화면 중앙 기준으로 반전
+            Vector2 center = new Vector2(Screen.width / 2f, Screen.height / 2f);
+            screenPos.x = center.x - (screenPos.x - center.x);
+            screenPos.y = center.y - (screenPos.y - center.y);
         }
 
         float clampedX = Mathf.Clamp(screenPos.x, edgeOffset, Screen.width - edgeOffset);
         float clampedY = Mathf.Clamp(screenPos.y, edgeOffset, Screen.height - edgeOffset);
 
         Vector3 clampedPos = new Vector3(clampedX, clampedY, 0f);
-
         indicator.position = clampedPos;
+
+        Vector3 screenCenter = new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
+        Vector3 dir = (screenPos - screenCenter).normalized;
+
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+        indicator.rotation = Quaternion.Euler(0f, 0f, angle - 90f);
     }
 }

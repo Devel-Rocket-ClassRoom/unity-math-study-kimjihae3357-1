@@ -24,7 +24,7 @@ public class FollowCamera : MonoBehaviour
 
         Quaternion desiredRotation = target.rotation * Quaternion.Euler(10f, 0, 0);
 
-        transform.rotation = Quaternion.Lerp(
+        transform.rotation = Quaternion.Slerp(
             transform.rotation,
             desiredRotation,
             Time.deltaTime * 10f
