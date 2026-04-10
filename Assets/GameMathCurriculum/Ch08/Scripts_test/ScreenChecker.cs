@@ -72,7 +72,7 @@ public class ScreenChecker : MonoBehaviour
         float clampedX = Mathf.Clamp(screenPos.x, edgeOffset, Screen.width - edgeOffset);
         float clampedY = Mathf.Clamp(screenPos.y, edgeOffset, Screen.height - edgeOffset);
 
-        Vector3 clampedPos = new Vector3(clampedX, clampedY, 0f);
+        Vector2 clampedPos = new Vector3(clampedX, clampedY, 0f);
         indicator.position = clampedPos;
 
         Vector3 screenCenter = new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
